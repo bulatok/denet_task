@@ -12,6 +12,17 @@ var (
 	configPath string
 )
 
+// @title       Swagger denet_task API
+// @version     0.1
+// @description Api for uploading/downloading files
+// @contact.url https://bulatok.github.io/
+
+// @host     localhost:8080
+// @BasePath /
+
+// @securityDefinitions.apikey ApiKeyAuth
+// @in                         header
+// @name                       Authorization
 func init() {
 	flag.StringVar(&configPath, "config", "config.yml", "select the configs path")
 }

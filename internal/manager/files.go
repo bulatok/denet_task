@@ -6,12 +6,11 @@ import (
 	"mime/multipart"
 	"net/http"
 
-	"github.com/bulatok/denet_task/pkg/logger"
-	"go.uber.org/zap"
-
 	"github.com/bulatok/denet_task/internal/models"
-
 	"github.com/bulatok/denet_task/internal/usecase"
+	"github.com/bulatok/denet_task/pkg/logger"
+
+	"go.uber.org/zap"
 )
 
 type FilesManager interface {
@@ -55,11 +54,12 @@ func (f *filesManager) Download(name string) (*models.File, error) {
 	}
 
 	// decoding file
-	if err := myFile.Decode(); err != nil {
+	fileDecoded, err := models.DecodeFile(*myFile)
+	if err != nil {
 		return nil, err
 	}
 
-	return myFile, nil
+	return fileDecoded, nil
 }
 
 func (f *filesManager) Upload(header *multipart.FileHeader) error {

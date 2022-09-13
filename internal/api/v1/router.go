@@ -6,6 +6,7 @@ import (
 	"github.com/bulatok/denet_task/internal/api/v1/handlers"
 
 	"github.com/gorilla/mux"
+	swag "github.com/swaggo/http-swagger"
 )
 
 const (
@@ -15,6 +16,8 @@ const (
 
 func newRouter(h *handlers.Handlers) *mux.Router {
 	r := mux.NewRouter()
+
+	r.PathPrefix("/documentation/").Handler(swag.WrapHandler)
 	r.Methods(GET).Path("/ping").HandlerFunc(h.Ping)
 
 	filesRouter := r.PathPrefix("/files").Subrouter()

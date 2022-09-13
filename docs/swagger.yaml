@@ -1,0 +1,95 @@
+basePath: /
+definitions:
+  handlers.pongResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  models.FileOut:
+    properties:
+      encoded_size_MB:
+        type: integer
+      encoded_size_in_bytes:
+        type: integer
+      name:
+        type: string
+      original_size_MB:
+        type: integer
+      original_size_in_bytes:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    url: https://bulatok.github.io/
+  description: Api for uploading/downloading files
+  title: Swagger denet_task API
+  version: "0.1"
+paths:
+  /files/all:
+    get:
+      description: Получить информацию по всех хранящимся файлам
+      operationId: file-all-getter
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.FileOut'
+            type: array
+        "400":
+          description: Bad Request
+      summary: Получить информацию по всех хранящимся файлам
+      tags:
+      - files
+  /files/download/{fileName}:
+    get:
+      description: Возвращает сам файл и статус 200
+      operationId: file-download
+      parameters:
+      - description: имя файла
+        in: path
+        name: fileName
+        required: true
+        type: string
+      produces:
+      - multipart/form-data
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Скачивает файл по имени
+      tags:
+      - files
+  /files/upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Загружает файл, который передается в body запроса как multipart/form-data
+      operationId: file-upload
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Загружает файл
+      tags:
+      - files
+  /ping:
+    get:
+      description: Пингует сервер
+      operationId: ping-server
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.pongResponse'
+      tags:
+      - ping
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

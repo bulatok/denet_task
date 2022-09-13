@@ -1,15 +1,15 @@
 package handlers
 
 import (
+	"encoding/json"
 	"mime/multipart"
 	"net/http"
 
+	"github.com/bulatok/denet_task/internal/models"
 	"github.com/bulatok/denet_task/pkg/logger"
-	"go.uber.org/zap"
-
 	"github.com/bulatok/denet_task/pkg/types"
 
-	"github.com/bulatok/denet_task/internal/models"
+	"go.uber.org/zap"
 )
 
 const (
@@ -36,8 +36,20 @@ func parseFileMultiPart(r *http.Request) (*multipart.FileHeader, error) {
 	return files[fileName][0], nil
 }
 
+type pongResponse struct {
+	Message string `json:"message"`
+}
+
+// Ping godoc
+// @Tags ping
+// @Description Пингует сервер
+// @ID ping-server
+// @Success 200 {object} pongResponse
+// @Router /ping [get]
 func (h *Handlers) Ping(w http.ResponseWriter, r *http.Request) {
 	logger.Debug("request", zap.String("endpoint", r.RequestURI))
 
-	apiResponseJSON(w, []byte(`{"message": "pong"}`), http.StatusOK)
+	resp := &pongResponse{Message: "pong"}
+	d, _ := json.Marshal(resp)
+	apiResponseJSON(w, d, http.StatusOK)
 }

@@ -1,0 +1,144 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Api for uploading/downloading files",
+        "title": "Swagger denet_task API",
+        "contact": {
+            "url": "https://bulatok.github.io/"
+        },
+        "version": "0.1"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/files/all": {
+            "get": {
+                "description": "Получить информацию по всех хранящимся файлам",
+                "tags": [
+                    "files"
+                ],
+                "summary": "Получить информацию по всех хранящимся файлам",
+                "operationId": "file-all-getter",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.FileOut"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/files/download/{fileName}": {
+            "get": {
+                "description": "Возвращает сам файл и статус 200",
+                "produces": [
+                    "multipart/form-data"
+                ],
+                "tags": [
+                    "files"
+                ],
+                "summary": "Скачивает файл по имени",
+                "operationId": "file-download",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "имя файла",
+                        "name": "fileName",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/files/upload": {
+            "post": {
+                "description": "Загружает файл, который передается в body запроса как multipart/form-data",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "tags": [
+                    "files"
+                ],
+                "summary": "Загружает файл",
+                "operationId": "file-upload",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/ping": {
+            "get": {
+                "description": "Пингует сервер",
+                "tags": [
+                    "ping"
+                ],
+                "operationId": "ping-server",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.pongResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handlers.pongResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.FileOut": {
+            "type": "object",
+            "properties": {
+                "encoded_size_MB": {
+                    "type": "integer"
+                },
+                "encoded_size_in_bytes": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "original_size_MB": {
+                    "type": "integer"
+                },
+                "original_size_in_bytes": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

@@ -5,14 +5,12 @@ import (
 	"fmt"
 	"net/http"
 
-	"go.uber.org/zap"
-
 	"github.com/bulatok/denet_task/internal/manager"
-
 	"github.com/bulatok/denet_task/internal/models"
+	"github.com/bulatok/denet_task/internal/usecase"
 	"github.com/bulatok/denet_task/pkg/logger"
 
-	"github.com/bulatok/denet_task/internal/usecase"
+	"go.uber.org/zap"
 )
 
 type Handlers struct {

@@ -3,12 +3,11 @@ package basic
 import (
 	"sync"
 
+	"github.com/bulatok/denet_task/internal/models"
+	"github.com/bulatok/denet_task/pkg/logger"
 	"github.com/bulatok/denet_task/pkg/types"
 
-	"github.com/bulatok/denet_task/pkg/logger"
 	"go.uber.org/zap"
-
-	"github.com/bulatok/denet_task/internal/models"
 )
 
 type files struct {

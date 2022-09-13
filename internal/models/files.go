@@ -77,13 +77,17 @@ func (f *File) Encode() error {
 	return nil
 }
 
-// Decode decodes file by removing redundant 0 bytes
-func (f *File) Decode() error {
+// DecodeFile decodes File by removing redundant 0 bytes
+//
+// returns *File for not modifying the original file
+func DecodeFile(f File) (*File, error) {
+	f2 := &f
 	if f.data == nil {
-		return ErrNoData
+		return nil, ErrNoData
 	}
 
-	till := (*f).underLineMB*types.MB + (*f).offset
-	(*f).data = (*f).data[:till]
-	return nil
+	till := (*f2).underLineMB*types.MB + (*f2).offset
+	(*f2).data = (*f2).data[:till]
+
+	return f2, nil
 }

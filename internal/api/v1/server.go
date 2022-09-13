@@ -4,14 +4,13 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/bulatok/denet_task/pkg/logger"
-	"go.uber.org/zap"
-
 	"github.com/bulatok/denet_task/internal/api/v1/handlers"
 	"github.com/bulatok/denet_task/internal/config"
 	"github.com/bulatok/denet_task/internal/usecase"
+	"github.com/bulatok/denet_task/pkg/logger"
 
 	"github.com/rs/cors"
+	"go.uber.org/zap"
 )
 
 type ApiServer struct {
