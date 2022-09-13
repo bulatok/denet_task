@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - default
+    ports:
+      - "8080:8080"
+volumes:
+  data:
