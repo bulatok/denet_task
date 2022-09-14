@@ -66,11 +66,13 @@ func (f *filesManager) Upload(header *multipart.FileHeader) error {
 	myFile := &models.File{Name: header.Filename}
 	httpFile, err := header.Open()
 	if err != nil {
+		logger.Info("could open file")
 		return models.ErrCouldNotOpenFile
 	}
 
 	data, err := io.ReadAll(httpFile)
 	if err != nil {
+		logger.Info("could not read file")
 		return models.ErrCouldNotReadFile
 	}
 
@@ -79,6 +81,7 @@ func (f *filesManager) Upload(header *multipart.FileHeader) error {
 	myFile.SetData(data)
 	myFile.SetContentType(contentType)
 	if err := myFile.Encode(); err != nil {
+		logger.Info("could not encode file")
 		return err
 	}
 
